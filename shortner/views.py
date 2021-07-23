@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.views import View
 from .models import ShortUrl
 from django.shortcuts import redirect
+from django.utils import timezone
 import uuid
 
 # Create your views here.
@@ -19,7 +20,7 @@ class HomeView(View):
             protocol = 'http://'
         host = request.get_host()
         slug = protocol + host + '/' + slug + '/'
-        ShortUrl.objects.create(slug=slug, original_url=url)
+        obj = ShortUrl.objects.create(slug= slug, original_url= url)
         context = {'url': url,
                    'slug': slug}
 
@@ -32,5 +33,6 @@ def redirectView(request, slug):
         protocol = 'http://'
     host = request.get_host()
     slug = protocol + host + '/' + slug + '/'
-    obj = ShortUrl.objects.filter(slug=slug).first()
-    return redirect(obj.original_url)
+    obj = ShortUrl.objects.filter(slug= slug).first()
+    if not obj.expired:
+        return redirect(obj.original_url)

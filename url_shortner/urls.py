@@ -19,6 +19,6 @@ from shortner.views import HomeView, redirectView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('home/', HomeView.as_view()),
+    path('', HomeView.as_view()),
     path('<str:slug>/', redirectView),
 ]
