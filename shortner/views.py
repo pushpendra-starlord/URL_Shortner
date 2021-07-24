@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.views import View
 from .models import ShortUrl
 from django.shortcuts import redirect
-from django.utils import timezone
+from django.http import Http404
 import uuid
 
 # Create your views here.
@@ -36,3 +36,6 @@ def redirectView(request, slug):
     obj = ShortUrl.objects.filter(slug= slug).first()
     if not obj.expired:
         return redirect(obj.original_url)
+    else:
+        raise Http404("URL does not exist")
+        
