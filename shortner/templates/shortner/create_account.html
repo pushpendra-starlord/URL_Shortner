@@ -1,0 +1,26 @@
+{% extends 'shortner/base.html' %}
+
+{% block content %}
+<style>
+    .main{
+        display: block;
+        width: 40%;
+        height: 60vh;
+        padding: 1em;
+        margin: auto;
+        border-radius: 5px;
+    }
+
+</style>
+{% load crispy_forms_tags %}
+<div class="main my-4">
+    <form action="{% url 'signup' %}" method="POST">
+        {% csrf_token %}
+        {{ form|crispy}}
+     
+      <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+
+</div>
+
+{% endblock %}
